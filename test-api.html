@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NPI API Test</title>
+</head>
+
+<body>
+    <h1>NPI API Test</h1>
+    <button onclick="testApi()">Test API</button>
+    <pre id="result"></pre>
+
+    <script>
+        function testApi() {
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = 'Loading...';
+
+            fetch('https://clinicaltables.nlm.nih.gov/api/npi_org/v3/search?terms=hospital&maxList=5')
+                .then(response => response.json())
+                .then(data => {
+                    resultElement.textContent = JSON.stringify(data, null, 2);
+                    console.log('API Response:', data);
+                })
+                .catch(error => {
+                    resultElement.textContent = 'Error: ' + error.message;
+                    console.error('API Error:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>
